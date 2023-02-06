@@ -1,6 +1,49 @@
 from random import randint
 import time
 
+class Dot:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    def __repr__(self):
+        return f'{self.x}, {self.y}'
+
+# Ошибки
+class BoardError(Error):
+    pass
+
+class BoardOutError(BoardError):
+    def __str__(self):
+        return 'Вы пытаетесь выстрелить за пределы игрового поля!'
+
+class BoardSameError(BoardError):
+    def __str__(self):
+        return 'Вы уже стреляли в эту клетку'
+
+ # Класс кораблей
+class Ship:
+    def __init__(self, bow, l, o):
+        self.bow = bow
+        self.l = l
+        self.o = o
+    @property
+    def dots(self):
+        ship_dots = []
+        for i in range(self.l):
+            cur_x = self.bow.x
+            cur_y = self.bow.y
+            if self.o == 0:
+                cur_x += 1
+            elif self.o == 1:
+                cur_y += 1
+
+            ship_dots.append(Dot(cur_x, cur_y))
+        return ship_dots
+
+    def shooten(self):
+        return shot in self.dots
+
+
 #Create GameBoard
 class Board:
     def __init__(self, hid=False, size=6):
